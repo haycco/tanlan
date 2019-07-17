@@ -28,7 +28,7 @@ info:
   formatter-version: v@project.version@
   name:  @name.prefix@-@project.artifactId@
   description: @project.description@
-  build-timestamp: @timestamp@
+  buildTimestamp: @timestamp@
 
 logging.file: /logs/@name.prefix@/${spring.application.name}/${spring.application.name}.log
 logging.pattern.console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${log.level:%5p}) %clr(${PID:- }){magenta} %clr(${spring.application.name}){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr([line: %line{12}]){magenta} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
@@ -64,6 +64,8 @@ eureka:
     #服务刷新时间配置，每隔这个时间会主动心跳一次 默认30s
     lease-renewal-interval-in-seconds: 5
   client:
+#    register-with-eureka: true
+    ##    fetch-registry: true
     #eureka client刷新本地缓存时间 默认30s
     registry-fetch-interval-seconds: 5
     service-url:

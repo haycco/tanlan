@@ -62,6 +62,9 @@ eureka:
     #hostname: registry
     prefer-ip-address: true
     #instance-id: @profile.env@:${spring.application.name}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
     #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
     #这个配置一般为服务刷新时间配置的三倍 默认90s
     lease-expiration-duration-in-seconds: 15
@@ -81,6 +84,9 @@ eureka:
     #hostname: registry
     prefer-ip-address: true
     #instance-id: dev:${spring.application.name}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
     #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
     #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
     #这个配置一般为服务刷新时间配置的三倍 默认90s
@@ -102,6 +108,9 @@ eureka:
     #hostname: registry
     prefer-ip-address: true
     #instance-id: dev:${spring.application.name}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
     #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
     #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
     #这个配置一般为服务刷新时间配置的三倍 默认90s
@@ -124,6 +133,9 @@ eureka:
     #hostname: registry
     prefer-ip-address: true
     #instance-id: dev:${spring.application.name}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
     #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
     #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
     #这个配置一般为服务刷新时间配置的三倍 默认90s

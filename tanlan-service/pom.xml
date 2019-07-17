@@ -14,7 +14,7 @@
 
   <modules>
     <module>user-service</module>
-      <module>order-service</module>
+    <module>order-service</module>
   </modules>
 
   <dependencies>

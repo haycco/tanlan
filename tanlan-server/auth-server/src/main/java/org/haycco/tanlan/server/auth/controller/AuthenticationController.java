@@ -52,9 +52,6 @@ public class AuthenticationController {
     @Resource
     private ReactiveRedisTemplate<String, Object> reactiveRedisTemplate;
 
-    @Value("${auth.backend.accessTokenTime}")
-    private Long backendExpirationTime;
-
     @ApiOperation(value = "手机号登录")
     @RequestMapping(value = "/login/phone", method = RequestMethod.POST)
     public Mono<AuthResponse> login(@RequestBody AuthRequest ar) {
@@ -81,7 +78,6 @@ public class AuthenticationController {
             .switchIfEmpty(Mono.error(new BusinessException(UserErrEnum.USER_NOT_EXISTS)))
             .map((userDetails) -> {
                 AuthResponse authResponse = createAuthResponse(userDetails);
-                authResponse.setRcToken(userDetails.getRcToken());
                 return authResponse;
             });
     }

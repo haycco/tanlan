@@ -1,0 +1,257 @@
+version: '3.4'
+services:
+  registryserver1:
+    image: tanlan/dev_registry-server:1.0.0-SNAPSHOT
+    hostname: registryserver1
+    ports:
+    - "8761:8761"
+    deploy:
+      replicas: 1
+      # @see https://docs.docker.com/compose/compose-file/#restart_policy
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      # @see https://docs.docker.com/compose/compose-file/#resources
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://admin:admin@registryserver1:8761/actuator/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+    environment:
+    - JAVA_OPTS=-Xmx512M -Xms512M -Xmn128M
+    - eureka.client.service-url.defaultZone=http://admin:admin@registryserver1:8761/eureka/
+
+  configserver:
+    image: tanlan/dev_config-server:1.0.0-SNAPSHOT
+    ports:
+    - "8888:8888"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    depends_on:
+    - eurekaserver1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://admin:admin@localhost:8888/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    volumes:
+    - "/data/config/tanlan/tanlan-config-server/config-repo:/data/config/tanlan/tanlan-config-server/config-repo"
+    - "/data/logs:/logs"
+    environment:
+    - JAVA_OPTS=-Xmx512M -Xms512M -Xmn128M
+    - spring.cloud.config.server.native.search-locations=file:///data/config/tanlan/tanlan-config-server/config-repo
+    - eureka.client.service-url.defaultZone=http://admin:admin@eurekaserver1:8761/eureka/
+    - spring.boot.admin.client.url=http://monitorserver:8000
+    - eureka.instance.ip-address=39.108.174.173
+
+  authserver:
+    image: tanlan/dev_auth-server:1.0.0-SNAPSHOT
+    ports:
+    - "8090:8090"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    depends_on:
+    - configserver
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://admin:admin@localhost:8090/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+    volumes:
+    - "/data/logs:/logs"
+    environment:
+    - JAVA_OPTS=-Xmx512M -Xms512M -Xmn128M
+    - eureka.client.service-url.defaultZone=http://admin:admin@registryserver1:8761/eureka/
+
+  userservice:
+    image: tanlan/dev_user-service:1.0.0-SNAPSHOT
+    ports:
+    - "9001:9001"
+    - "50051:50051"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    depends_on:
+    - configserver
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9001/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+    volumes:
+    - "/data/logs:/logs"
+    environment:
+    - JAVA_OPTS=-Xmx512M -Xms512M -Xmn128M -Xdebug -Xrunjdwp:transport=dt_socket,address=50051,server=y,suspend=n
+    - eureka.client.service-url.defaultZone=http://admin:admin@registryserver1:8761/eureka/
+
+  orderservice:
+    image: tanlan/dev_order-service:1.0.0-SNAPSHOT
+    ports:
+    - "9002:9002"
+    - "50052:50052"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    depends_on:
+    - configserver
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9002/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+    volumes:
+    - "/data/logs:/logs"
+    environment:
+    - JAVA_OPTS=-Xmx512M -Xms512M -Xmn128M -Xdebug -Xrunjdwp:transport=dt_socket,address=50052,server=y,suspend=n
+    - eureka.client.service-url.defaultZone=http://admin:admin@registryserver1:8761/eureka/
+
+  gatewayserver:
+    image: tanlan/dev_gateway-server:1.0.0-SNAPSHOT
+    ports:
+    - "8080:8080"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    depends_on:
+    - eurekaserver1
+    - configserver
+    - feastservice
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 20
+    volumes:
+    - "/data/logs:/logs"
+    environment:
+    - JAVA_OPTS=-Xmx512M -Xms512M -Xmn128M
+    - eureka.client.service-url.defaultZone=http://admin:admin@registryserver1:8761/eureka/
+
+  # last one to start up monitor application
+  monitorserver:
+    image: tanlan/dev_monitor-server:1.0.0-SNAPSHOT
+    hostname: monitorserver
+    ports:
+    - "8000:8000"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    depends_on:
+    - eurekaserver1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+    volumes:
+    - "/data/logs:/logs"
+    environment:
+    - JAVA_OPTS=-Xmx512M -Xms512M -Xmn128M
+    - eureka.client.service-url.defaultZone=http://admin:admin@registryserver1:8761/eureka/
+
+  zipkinserver:
+    image: openzipkin/zipkin
+    hostname: zipkinserver
+    ports:
+    - "9411:9411"
+    deploy:
+      replicas: 1
+      # @see https://docs.docker.com/compose/compose-file/#restart_policy
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      # @see https://docs.docker.com/compose/compose-file/#resources
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    environment:
+      - STORAGE_TYPE=mysql
+      - MYSQL_DB=zipkin
+      - MYSQL_USER=root
+      - MYSQL_PASS=root
+      - MYSQL_HOST=127.0.0.1
+      - MYSQL_TCP_PORT=3306
+      - JAVA_OPTS=-Xmx512M -Xms512M -Xmn128M

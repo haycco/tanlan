@@ -26,9 +26,6 @@ public class JWTUtil {
 	@Value("${auth.client.accessTokenTime}")
 	private Long expirationTime;
 
-	@Value("${auth.backend.accessTokenTime}")
-	private Long backendExpirationTime;
-
 	@Value("${auth.client.refreshTokenTime}")
 	private Long refreshExpirationTime;
 
@@ -58,17 +55,6 @@ public class JWTUtil {
 			}
 		}
 		return doGenerateToken(claims, subject,expirationTime);
-	}
-
-	public String generateBackendToken(String id, String subject, Map<String, String> others) {
-		Map<String, Object> claims = new ConcurrentHashMap<>();
-		claims.put("id", id);
-		if (others != null){
-			for (Map.Entry<String, String> other : others.entrySet()) {
-				claims.put(other.getKey(), other.getValue());
-			}
-		}
-		return doGenerateToken(claims, subject,backendExpirationTime);
 	}
 
 	public String generateRefreshToken(UserVo user){

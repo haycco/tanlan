@@ -10,27 +10,27 @@ spring:
     user:
       name: admin
       password: ${MONITOR_SERVER_PASSWORD:admin}
-  mail:
-    host: smtp.xxx.com
-    port: 465
-    username: xxx@gmail.com
-    password: xxx
-    test-connection: false
-    properties:
-      mail:
-        smtp:
-          auth: true
-          ssl:
-            enable: true
-          starttls:
-            enable: true
-            required: true
-  boot:
-    admin:
-      notify:
-        mail:
-          from: xxx@gmail.com
-          to: xxx@gmail.com
+#  mail:
+#    host: smtp.xxx.com
+#    port: 465
+#    username: xxx@gmail.com
+#    password: xxx
+#    test-connection: false
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          ssl:
+#            enable: true
+#          starttls:
+#            enable: true
+#            required: true
+#  boot:
+#    admin:
+#      notify:
+#        mail:
+#          from: xxx@gmail.com
+#          to: xxx@gmail.com
 
 #info
 info:

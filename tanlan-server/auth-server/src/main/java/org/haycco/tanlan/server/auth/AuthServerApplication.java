@@ -4,7 +4,6 @@ import org.haycco.tanlan.common.constant.CommonConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
-import org.springframework.context.annotation.Import;
 import reactivefeign.spring.config.EnableReactiveFeignClients;
 
 /**
