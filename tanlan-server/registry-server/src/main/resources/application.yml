@@ -1,0 +1,106 @@
+server:
+  port: 8761
+  undertow:
+    buffer-size: 1024
+    direct-buffers: true
+    io-threads: 16
+    worker-threads: 256
+
+management.endpoints.web.exposure.include: '*'
+
+spring:
+  application:
+    name: @name.prefix@-@project.artifactId@
+  profiles:
+    active: @profile.env@
+  freemarker:
+#    template-loader-path: classpath:/templates/
+    prefer-file-system-access: false
+  security:
+#    basic:
+#      enabled: true
+    user:
+      name: admin
+      password: ${EUREKA_SERVER_PASSWORD:admin}
+  boot:
+    admin:
+      client:
+        url: ${SPRING_BOOT_ADMIN_SERVER_URI:http://localhost:8000}
+        instance:
+          service-base-url: http://${eureka.instance.ip-address}:8761
+          metadata:
+            user.name: ${spring.security.user.name}
+            user.password: ${spring.security.user.password}
+
+#info
+info:
+  version: @project.version@
+  formatter-version: v@project.version@
+  name:  @name.prefix@-@project.artifactId@
+  description: @project.description@
+  build-timestamp: @timestamp@
+
+#Eureka System show status info
+archaius:
+  deployment:
+    environment: @profile.env@
+#    datacenter: 127.0.0.1
+
+logging.file: /logs/@name.prefix@/${spring.application.name}/${spring.application.name}.log
+logging.pattern.console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${log.level:%5p}) %clr(${PID:- }){magenta} %clr(${spring.application.name}){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr([line: %line{12}]){magenta} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+logging.pattern.file: "%d{yyyy-MM-dd HH:mm:ss.SSS} ${log.level:%5p} ${PID:- } ${spring.application.name} [%t] %c [line: %line] : %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
+---
+spring:
+  profiles: dev
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    serviceUrl:
+#      defaultZone: http://admin:admin@localhost:8761/eureka/
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:${server.port}/eureka/
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    #hostname: localhost
+    prefer-ip-address: true
+  server:
+    wait-time-in-ms-when-sync-empty: 0
+
+---
+spring:
+  profiles: test
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:${server.port}/eureka/
+  instance:
+    #hostname: ${hostname}
+    prefer-ip-address: true
+
+---
+spring:
+  profiles: staging
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:${server.port}/eureka/
+  instance:
+    prefer-ip-address: true
+
+---
+spring:
+  profiles: prod
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:${server.port}/eureka/
+  instance:
+    prefer-ip-address: true

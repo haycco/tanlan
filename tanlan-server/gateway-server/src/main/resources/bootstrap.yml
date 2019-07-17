@@ -1,0 +1,111 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: @name.prefix@-@project.artifactId@
+  profiles:
+    active: @profile.env@
+  boot:
+    admin:
+      client:
+        url: ${SPRING_BOOT_ADMIN_SERVER_URI:http://localhost:8000}
+  cloud:
+    config:
+      profile: @profile.env@ #指定运行环境: dev/test/staging/prod
+      label: @profile.label@ #指定分支: dev/master/...
+      discovery:
+        enabled: true
+        service-id: @name.prefix@-config-server
+      fail-fast: true
+      username: ${spring.security.user.name}
+      password: ${spring.security.user.password}
+      retry:
+        initial-interval: 2000
+        max-interval: 10000
+        multiplier: 2
+        max-attempts: 10
+  security:
+    user:
+      name: admin
+      password: ${GATEWAY_SERVER_PASSWORD:admin}
+
+#info
+info:
+  version: @project.version@
+  formatter-version: v@project.version@
+  name:  @name.prefix@-@project.artifactId@
+  description: @project.description@
+  build-timestamp: @timestamp@
+
+---
+spring:
+  profiles: dev
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    #instance-id: dev:${spring.application.name}:${server.port}
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+  client:
+    registryFetchIntervalSeconds: 5
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8761/eureka/
+
+---
+spring:
+  profiles: test
+
+eureka:
+  instance:
+    #hostname: 127.0.0.1
+    prefer-ip-address: true
+    #instance-id: test:${spring.application.name}:${server.port}
+    #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
+    #这个配置一般为服务刷新时间配置的三倍 默认90s
+    lease-expiration-duration-in-seconds: 15
+    #服务刷新时间配置，每隔这个时间会主动心跳一次 默认30s
+    lease-renewal-interval-in-seconds: 5
+  client:
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}
+
+---
+spring:
+  profiles: staging
+
+eureka:
+  instance:
+    #hostname: 127.0.0.1
+    #prefer-ip-address: true
+    #instance-id: grey:${spring.application.name}:${server.port}
+    #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
+    #这个配置一般为服务刷新时间配置的三倍 默认90s
+    lease-expiration-duration-in-seconds: 15
+    #服务刷新时间配置，每隔这个时间会主动心跳一次 默认30s
+    lease-renewal-interval-in-seconds: 5
+  client:
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}
+
+---
+spring:
+  profiles: prod
+
+eureka:
+  instance:
+    #hostname: 127.0.0.1
+    prefer-ip-address: true
+    #instance-id: prod:${spring.application.name}:${server.port}
+    #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
+    #这个配置一般为服务刷新时间配置的三倍 默认90s
+    lease-expiration-duration-in-seconds: 15
+    #服务刷新时间配置，每隔这个时间会主动心跳一次 默认30s
+    lease-renewal-interval-in-seconds: 5
+  client:
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}

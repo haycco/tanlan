@@ -1,0 +1,10 @@
+spring:
+  boot:
+    admin:
+      client:
+        url: ${SPRING_BOOT_ADMIN_SERVER_URI:http://localhost:8000}
+        instance:
+          service-base-url: http://${eureka.instance.ip-address}:8888
+          metadata:
+            user.name: ${spring.security.user.name}
+            user.password: ${spring.security.user.password}

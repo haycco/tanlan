@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.haycco.tanlan</groupId>
+    <artifactId>tanlan</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>tanlan</name>
+    <description>Tanlan is Reactive Micro-services for Spring Cloud Application, which is a higher speed higher reactive streams micro-services cluster build for reactor-netty.</description>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <name.prefix>tanlan</name.prefix>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+        <spring-boot-admin-server.version>2.1.5</spring-boot-admin-server.version>
+        <swagger-annotations.version>1.5.21</swagger-annotations.version>
+        <feign-reactive.version>1.0.30</feign-reactive.version>
+        <wiremock.version>2.19.0</wiremock.version>
+        <springfox.version>3.0.0-SNAPSHOT</springfox.version>
+        <mysql-connector-java.version>5.1.46</mysql-connector-java.version>
+        <druid.version>1.1.14</druid.version>
+        <bcprov-jdk15on.version>1.59</bcprov-jdk15on.version>
+        <elastic-job.version>2.1.5</elastic-job.version>
+        <curator-client.version>2.11.1</curator-client.version>
+        <commons-lang3.version>3.6</commons-lang3.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+        <docker-maven-plugin.version>1.2.0</docker-maven-plugin.version>
+        <dockerfile-maven-plugin.version>1.4.10</dockerfile-maven-plugin.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+        <jjwt.version>0.10.5</jjwt.version>
+        <rongcloud.version>3.0.2</rongcloud.version>
+        <guava.version>27.0.1-jre</guava.version>
+        <spring-cloud-alibaba.version>0.9.0.RELEASE</spring-cloud-alibaba.version>
+        <redisson.version>3.10.6</redisson.version>
+        <spring-cloud-sleuth.version>2.1.2.RELEASE</spring-cloud-sleuth.version>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+        <timestamp>${maven.build.timestamp}</timestamp>
+    </properties>
+
+    <modules>
+        <module>tanlan-common</module>
+        <module>tanlan-api</module>
+        <module>tanlan-server</module>
+        <module>tanlan-service</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- 各环境的打包配置 -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <log.level>DEBUG</log.level>
+                <profile.env>dev</profile.env>
+                <profile.env.cfg>native</profile.env.cfg>
+                <profile.label>dev</profile.label>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <log.level>DEBUG</log.level>
+                <profile.env>test</profile.env>
+                <profile.env.cfg>git</profile.env.cfg>
+                <profile.label>master</profile.label>
+            </properties>
+        </profile>
+        <profile>
+            <id>staging</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <log.level>DEBUG</log.level>
+                <profile.env>staging</profile.env>
+                <profile.env.cfg>git</profile.env.cfg>
+                <profile.label>master</profile.label>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <log.level>INFO</log.level>
+                <profile.env>prod</profile.env>
+                <profile.env.cfg>git</profile.env.cfg>
+                <profile.label>master</profile.label>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <resources>
+            <!-- 指定哪些需要过滤处理的资源文件，即替换${key}或@key@形式的变量 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.txt</include>
+                    <include>**/*.jks</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>timestamp</name>
+                            <pattern>${maven.build.timestamp.format}</pattern>
+                            <locale>zh,CN</locale>
+                            <timeZone>GMT+8</timeZone>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker-maven-plugin.version}</version>
+                <configuration>
+                    <serverId>docker_${name.prefix}</serverId>
+                    <!--镜像的基础版本-->
+                    <!--<baseImage>fabric8/java-jboss-openjdk8-jdk:1.2.3</baseImage>-->
+                    <!--<pushImage>true</pushImage>-->
+                    <!--<registryUrl>127.0.0.1:5000</registryUrl>-->
+                    <!--镜像名称-->
+                    <imageName>${name.prefix}/${profile.env}_${project.artifactId}:${project.version}</imageName>
+                    <!--安装了docker的主机，并且打开了api remote接口设置-->
+                    <!-- <dockerHost>http://127.0.0.1:2375</dockerHost> -->
+                    <!--指定 Dockerfile 的位置-->
+                    <dockerDirectory>${project.basedir}/../../docker/</dockerDirectory>
+                    <!-- 需要和Dockerfile一起，构建镜像时使用的文件 -->
+                    <resources>
+                        <resource>
+                            <!--项目根目录-->
+                            <targetPath>/</targetPath>
+                            <!--默认是target-->
+                            <directory>${project.build.directory}</directory>
+                            <!--默认是${project.artifactId}-${project.version}-->
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <!-- 防止JKS被maven错误解析占位符 -->
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>jks</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/libs-release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jcenter-snapshots</id>
+            <name>jcenter</name>
+            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+        </repository>
+    </repositories>
+
+</project>

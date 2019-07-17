@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="common-core" />
+        <module name="common-base" />
+        <module name="order-service" />
+        <module name="config-server" />
+        <module name="order-api" />
+        <module name="user-api" />
+        <module name="common-config" />
+        <module name="user-service" />
+        <module name="auth-server" />
+        <module name="registry-server" />
+        <module name="gateway-server" />
+        <module name="monitor-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="auth-server" target="1.8" />
+      <module name="common-base" target="1.8" />
+      <module name="common-config" target="1.8" />
+      <module name="common-core" target="1.8" />
+      <module name="config-server" target="1.8" />
+      <module name="gateway-server" target="1.8" />
+      <module name="monitor-server" target="1.8" />
+      <module name="order-api" target="1.8" />
+      <module name="order-service" target="1.8" />
+      <module name="registry-server" target="1.8" />
+      <module name="tanlan" target="1.8" />
+      <module name="tanlan-api" target="1.8" />
+      <module name="tanlan-common" target="1.8" />
+      <module name="tanlan-server" target="1.8" />
+      <module name="tanlan-service" target="1.8" />
+      <module name="user-api" target="1.8" />
+      <module name="user-service" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="auth-server" options="-parameters" />
+      <module name="common-base" options="-parameters" />
+      <module name="common-config" options="-parameters" />
+      <module name="common-core" options="-parameters" />
+      <module name="config-server" options="-parameters" />
+      <module name="gateway-server" options="-parameters" />
+      <module name="monitor-server" options="-parameters" />
+      <module name="order-api" options="-parameters" />
+      <module name="order-service" options="-parameters" />
+      <module name="registry-server" options="-parameters" />
+      <module name="user-api" options="-parameters" />
+      <module name="user-service" options="-parameters" />
+    </option>
+  </component>
+</project>

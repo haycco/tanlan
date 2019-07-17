@@ -1,0 +1,178 @@
+server:
+  port: 8888
+  undertow:
+    buffer-size: 1024
+    direct-buffers: true
+    io-threads: 16
+    worker-threads: 256
+spring:
+  application:
+    name: @name.prefix@-@project.artifactId@
+  profiles:
+    active: @profile.env.cfg@,@profile.env@
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  security:
+    user:
+      name: admin
+      password: ${CONFIG_SERVER_PASSWORD:admin}
+
+management.endpoints.web.exposure.include: '*'
+
+#info
+info:
+  version: @project.version@
+  formatter-version: v@project.version@
+  name:  @name.prefix@-@project.artifactId@
+  description: @project.description@
+  build-timestamp: @timestamp@
+
+logging.file: /logs/@name.prefix@/${spring.application.name}/${spring.application.name}.log
+logging.pattern.console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${log.level:%5p}) %clr(${PID:- }){magenta} %clr(${spring.application.name}){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr([line: %line{12}]){magenta} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+logging.pattern.file: "%d{yyyy-MM-dd HH:mm:ss.SSS} ${log.level:%5p} ${PID:- } ${spring.application.name} [%t] %c [line: %line] : %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
+---
+spring:
+  #配置服务器使用native本地配置（默认值为git,使用git远程配置）
+  profiles: native,dev
+  cloud:
+    config:
+      fail-fast: true
+      server:
+        # 读取本地配置目录
+        native:
+#          search-locations: file:///data/config/tanlan/tanlan-config-server/config-repo
+          search-locations: classpath:config-repo/
+          addLabelLocations: true
+          default-label: @profile.label@
+
+eureka:
+  instance:
+    #hostname: ${spring.cloud.client.ipAddress}
+    prefer-ip-address: true
+    #instance-id: ${spring.application.name}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+    #过期时间配置:超过这个时间，EurekaServer没有接收到心跳，EurekaServer就会将这个实例剔除
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
+    #这个配置一般为服务刷新时间配置的三倍 默认90s
+    lease-expiration-duration-in-seconds: 15
+    #服务刷新时间配置，每隔这个时间会主动心跳一次 默认30s
+    lease-renewal-interval-in-seconds: 5
+  client:
+    #eureka client刷新本地缓存时间 默认30s
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8761/eureka/
+
+---
+spring:
+  profiles: git,test
+  cloud:
+    config:
+      fail-fast: true
+      server:
+        git:
+          uri: git@github:devops/tanlan-config.git
+          searchPaths: config-repo/@profile.env@
+          label: @profile.label@
+          ignoreLocalSshSettings: true
+          #hostKey: someHostKey
+          #hostKeyAlgorithm: ssh-rsa
+          #privateKey:
+
+eureka:
+  instance:
+    #hostname: ${spring.cloud.client.ipAddress}
+    prefer-ip-address: true
+    #instance-id: ${spring.application.name}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+    #过期时间配置:超过这个时间，EurekaServer没有接收到心跳，EurekaServer就会将这个实例剔除
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
+    #这个配置一般为服务刷新时间配置的三倍 默认90s
+    lease-expiration-duration-in-seconds: 15
+    #服务刷新时间配置，每隔这个时间会主动心跳一次 默认30s
+    lease-renewal-interval-in-seconds: 5
+  client:
+    #eureka client刷新本地缓存时间 默认30s
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}
+
+---
+spring:
+  profiles: git,staging
+  cloud:
+    config:
+      fail-fast: true
+      server:
+        git:
+          uri: git@github:devops/tanlan-config.git
+          searchPaths: config-repo/@profile.env@
+          label: @profile.label@
+          ignoreLocalSshSettings: true
+          #hostKey: someHostKey
+          #hostKeyAlgorithm: ssh-rsa
+          #privateKey:
+
+eureka:
+  instance:
+    #hostname: ${spring.cloud.client.ipAddress}
+    prefer-ip-address: true
+    #instance-id: ${spring.application.name}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+    #过期时间配置:超过这个时间，EurekaServer没有接收到心跳，EurekaServer就会将这个实例剔除
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
+    #这个配置一般为服务刷新时间配置的三倍 默认90s
+    lease-expiration-duration-in-seconds: 15
+    #服务刷新时间配置，每隔这个时间会主动心跳一次 默认30s
+    lease-renewal-interval-in-seconds: 5
+  client:
+    #eureka client刷新本地缓存时间 默认30s
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}
+
+---
+spring:
+  profiles: git,prod
+  cloud:
+    config:
+      fail-fast: true
+      server:
+        git:
+          uri: git@github:devops/tanlan-config.git
+          searchPaths: config-repo/@profile.env@
+          label: @profile.label@
+          ignoreLocalSshSettings: true
+          #hostKey: someHostKey
+          #hostKeyAlgorithm: ssh-rsa
+          #privateKey:
+
+eureka:
+  instance:
+    #hostname: ${spring.cloud.client.ipAddress}
+    prefer-ip-address: true
+    #instance-id: ${spring.application.name}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+    #过期时间配置:超过这个时间，EurekaServer没有接收到心跳，EurekaServer就会将这个实例剔除
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，
+    #这个配置一般为服务刷新时间配置的三倍 默认90s
+    lease-expiration-duration-in-seconds: 15
+    #服务刷新时间配置，每隔这个时间会主动心跳一次 默认30s
+    lease-renewal-interval-in-seconds: 5
+  client:
+    #eureka client刷新本地缓存时间 默认30s
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}

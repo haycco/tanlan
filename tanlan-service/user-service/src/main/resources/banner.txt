@@ -1,0 +1,6 @@
+        ****************************************************************
+                   Copyright (C) https://github.com/haycco
+                   Version: ${info.formatter-version}
+                   Build Timestamp: ${info.build-timestamp}
+                   Description: ${info.description}
+        ****************************************************************

@@ -1,2 +1,2 @@
-# tanlan
-Tanlan is Reactive Microservices for Spring Cloud Application, which is a higher speed higher reactive streams microservices cluster build for reactor-netty.
+# Tanlan
+Tanlan is Reactive Micro-services for Spring Cloud Application, which is a higher speed higher reactive streams micro-services cluster build for reactor-netty.

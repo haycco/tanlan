@@ -1,0 +1,105 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: @name.prefix@-@project.artifactId@
+  profiles:
+    active: @profile.env@
+  security:
+    user:
+      name: admin
+      password: ${MONITOR_SERVER_PASSWORD:admin}
+  mail:
+    host: smtp.xxx.com
+    port: 465
+    username: xxx@gmail.com
+    password: xxx
+    test-connection: false
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+            required: true
+  boot:
+    admin:
+      notify:
+        mail:
+          from: xxx@gmail.com
+          to: xxx@gmail.com
+
+#info
+info:
+  version: @project.version@
+  formatter-version: v@project.version@
+  name:  @name.prefix@-@project.artifactId@
+  description: @project.description@
+  build-timestamp: @timestamp@
+
+logging.file: /logs/@name.prefix@/${spring.application.name}/${spring.application.name}.log
+logging.pattern.console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${log.level:%5p}) %clr(${PID:- }){magenta} %clr(${spring.application.name}){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr([line: %line{12}]){magenta} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+logging.pattern.file: "%d{yyyy-MM-dd HH:mm:ss.SSS} ${log.level:%5p} ${PID:- } ${spring.application.name} [%t] %c [line: %line] : %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
+---
+spring:
+  profiles: dev
+
+eureka:
+  instance:
+    #hostname: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8761/eureka/
+
+---
+spring:
+  profiles: test
+
+eureka:
+  instance:
+    #hostname: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}
+
+---
+spring:
+  profiles: staging
+
+eureka:
+  instance:
+    #hostname: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}
+
+---
+spring:
+  profiles: prod
+
+eureka:
+  instance:
+    #hostname: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}
