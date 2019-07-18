@@ -19,7 +19,12 @@ Tanlan is webflux reactive micro-services for Spring Cloud 2.x Application, whic
 2. `mvn spring-boot:run`
 3. Start `registry-server` micro-service project
 4. Point your browser to [https://localhost:8761](https://localhost:8761) user&password: admin
+![Image](https://raw.githubusercontent.com/haycco/imgrepo/master/img/registry-server.png)
 5. Next step Start `config-server` micro-service project
 6. Point your browser to [https://localhost:8888](https://localhost:8888) user&password: admin
 7. Start `monitor-server` micro-service project
 8. Point your browser to [https://localhost:8000](https://localhost:8000)
+![Image](https://raw.githubusercontent.com/haycco/imgrepo/master/img/monitor.png)
+9. Point your browser to [https://localhost:8080/swagger-ui.html](https://localhost:8080/swagger-ui.html) auth server user&password: admin
+![Image](https://raw.githubusercontent.com/haycco/imgrepo/master/img/swagger-api.png)
+
