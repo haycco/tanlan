@@ -1,6 +1,8 @@
 # Tanlan
 Tanlan is webflux reactive micro-services for Spring Cloud 2.x Application, which is a higher speed higher reactive streams micro-services cluster build for reactor-netty、reactive mongodb、reactive redis.
 
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg?style=flat-square)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+
 ## Requirements
 * JDK 1.8+
 * Maven 3+
@@ -28,3 +30,5 @@ Tanlan is webflux reactive micro-services for Spring Cloud 2.x Application, whic
 9. Point your browser to [https://localhost:8080/swagger-ui.html](https://localhost:8080/swagger-ui.html) auth server user&password: admin
 ![Image](https://raw.githubusercontent.com/haycco/imgrepo/master/img/swagger-api.png)
 
+## License
+Library distributed under "Anti 996" License Version 1.0 (Draft)
