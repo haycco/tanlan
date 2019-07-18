@@ -31,4 +31,10 @@ Tanlan is webflux reactive micro-services for Spring Cloud 2.x Application, whic
 ![Image](https://raw.githubusercontent.com/haycco/imgrepo/master/img/swagger-api.png)
 
 ## License
-Library distributed under "Anti 996" License Version 1.0 (Draft)
+[Anti-996 License](LICENSE)
+
+ - The purpose of this license is to prevent anti-labour-law companies from using the software or codes under the license, and force those companies to weigh their way of working
+ - This draft is adapted from the MIT license. For a more detailed explanation, please see [Wiki](https://github.com/kattgu7/996-License-Draft/wiki). This license is designed to be compatible with all major open source licenses.  
+ 
+## Contact
+You can reach me by [E-mail](mailto:haycco@gmail.com) if you need.
