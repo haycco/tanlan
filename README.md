@@ -1,4 +1,4 @@
-# Tanlan
+# Tanlan [![Build Status](https://travis-ci.org/haycco/tanlan.svg?branch=master)](https://travis-ci.org/haycco/tanlan)
 Tanlan is webflux reactive micro-services for Spring Cloud 2.x Application, which is a higher speed higher reactive streams micro-services cluster build for reactor-netty、reactive mongodb、reactive redis.
 
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg?style=flat-square)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
