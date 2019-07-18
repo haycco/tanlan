@@ -3,8 +3,7 @@ package org.haycco.tanlan.common.config.properties;
 /**
  * Docket Properties
  *
- * @Author LiuQing.Qin
- * @Date 2018/10/19 15:01:31
+ * @Author haycco
  */
 public class DocketProperties {
 

@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Java Web Token 工具类
  *
- * @author liuyang
+ * @author haycco
  */
 @Component
 public class JWTUtil {

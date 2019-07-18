@@ -12,9 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * @author liuyang
- * @Description
- * @Date 2019/2/21 14:18
+ * @author haycco
  **/
 @Configuration
 @ConditionalOnProperty(value = "password.enable", havingValue = "true")

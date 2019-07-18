@@ -8,9 +8,6 @@ import org.springframework.cglib.beans.BeanCopier;
 
 /**
  *@Description: 基于Cglib的高性能对象属性复制工具
- *
- *@author  Orochi-Yzh
- *@dateTime  2019/6/3 18:21
 */
 public class FastBeanUtils {
 
@@ -20,11 +17,6 @@ public class FastBeanUtils {
     /**
      *@Description:
      *@param: [srcObj 原对象, destObj 目标对象, cache 是否缓存]
-     *@return: void
-     *@throws:
-     *
-     *@author  Orochi-Yzh
-     *@dateTime  2019/6/3 18:26
     */
     private static void copy(Object srcObj, Object destObj,boolean cache) {
         if(cache){
@@ -46,11 +38,6 @@ public class FastBeanUtils {
     /**
      *@Description:
      *@param: [srcObj 原对象, destObj 目标对象]
-     *@return: void
-     *@throws:
-     *
-     *@author  Orochi-Yzh
-     *@dateTime  2019/6/3 18:26
      */
     public static void copy(Object srcObj, Object destObj) {
         BeanCopier copier = BeanCopier.create(srcObj.getClass(), destObj.getClass(), false);

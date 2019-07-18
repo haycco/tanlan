@@ -8,9 +8,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * @author liuyang
- * @Description
- * @Date 2019/3/7 20:38
+ * @author haycco
  **/
 @Data
 @AllArgsConstructor

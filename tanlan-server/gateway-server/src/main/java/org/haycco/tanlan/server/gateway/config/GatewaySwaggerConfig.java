@@ -30,12 +30,7 @@ public class GatewaySwaggerConfig implements SwaggerResourcesProvider {
     @Autowired
     private DiscoveryRouteDefinitionLocator discoveryClientRouter;
 
-    private final List<String> ignoredModules = Arrays.asList("TANLAN-CONFIG-SERVER",//配置中心
-                                                              "TANLAN-GATEWAY-SERVER",//对外网关
-                                                              "TANLAN-BACKEND-GATEWAY-SERVER",//对内网关
-                                                              "TANLAN-BACKEND-SERVICE",//后管平台
-                                                              "TANLAN-MONITOR-SERVER",//监控服务
-                                                              "TANLAN-HYSTRIX-DASHBOARD-SERVER");
+    private final List<String> ignoredModules = Arrays.asList("TANLAN-CONFIG-SERVER", "TANLAN-GATEWAY-SERVER", "TANLAN-MONITOR-SERVER");
 
     @Override
     public List<SwaggerResource> get() {

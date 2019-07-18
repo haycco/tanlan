@@ -11,8 +11,7 @@ import reactor.core.publisher.Hooks;
  * 还可以使用log() 操作符。将其加到操作链上，偷窥操作链的动作过程: Flux.range(1, 10).log().take(3).subscribe();
  *
  *
- *@author  Orochi-Yzh
- *@dateTime  2019/3/19 16:43
+ *@author  haycco
 */
 //@Configuration
 //@Profile({"grey","test","dev","local"})

@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 /**
  *
- * @Author LiuQing.Qin
- * @Date 2018/10/19 15:03:21
+ * @Author haycco
  */
 public class ApiInfoProperties implements Serializable {
 

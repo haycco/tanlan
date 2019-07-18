@@ -10,8 +10,7 @@ import org.springframework.util.DigestUtils;
 /**
  *@Description:  JAVA版本的Discuz加解密，性能为aes/des加解密150倍左右
  *
- *@author  Orochi-Yzh
- *@dateTime  2019/4/9 11:31
+ *@author  haycco
 */
 @Component
 @Slf4j

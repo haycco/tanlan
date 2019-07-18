@@ -12,8 +12,7 @@ import org.springframework.beans.BeanWrapperImpl;
 /**
  * BeanUtils 工具类的增强版
  *
- * @author Orochi-Yzh
- * @dateTime 2018/3/16 14:11
+ * @author haycco
  */
 public class ExBeanUtils extends BeanUtils {
 

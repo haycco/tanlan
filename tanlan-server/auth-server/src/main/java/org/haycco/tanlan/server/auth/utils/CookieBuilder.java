@@ -6,9 +6,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * @author liuyang
- * @Description
- * @Date 2019/5/29 16:16
+ * @author haycco
  **/
 public class CookieBuilder {
 

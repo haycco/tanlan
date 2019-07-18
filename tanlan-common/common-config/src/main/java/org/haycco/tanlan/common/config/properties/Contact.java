@@ -3,8 +3,7 @@ package org.haycco.tanlan.common.config.properties;
 /**
  * Swagger Contacter
  *
- * @Author LiuQing.Qin
- * @Date 2018/10/19 15:16:20
+ * @Author haycco
  */
 public class Contact {
 

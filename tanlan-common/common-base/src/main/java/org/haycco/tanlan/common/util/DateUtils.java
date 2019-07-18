@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author tangtao
+ * @author haycco
  **/
 public class DateUtils {
 
@@ -69,9 +69,6 @@ public class DateUtils {
     /**
      *@Description: 把日期间隔生成一个连续的日期列表
      *  默认为当前日期延后7天
-     *
-     *@author  Orochi-Yzh
-     *@dateTime  2019/6/14 16:36
     */
     public static List<String> sequenceDays(String startDate,String endDate) {
         List<String> result = new ArrayList<>();
@@ -459,10 +456,6 @@ public class DateUtils {
      *@Description: 把日期转化为cron表达式
      *@param: [date]
      *@return: java.lang.String
-     *@throws:
-     *
-     *@author  Orochi-Yzh
-     *@dateTime  2019/5/8 18:03
     */
     public static String getCron(Date date){
         return fromDate2Str(date,CRON_FORMATTER);

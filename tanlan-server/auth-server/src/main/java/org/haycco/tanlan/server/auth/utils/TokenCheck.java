@@ -10,9 +10,7 @@ import java.util.Base64;
 import java.util.Date;
 
 /**
- * @author liuyang
- * @Description
- * @Date 2019/1/30 18:21
+ * @author haycco
  **/
 @Configuration
 public class TokenCheck {

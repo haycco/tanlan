@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 /**
- * @author tangtao
+ * @author haycco
  **/
 @Configuration
 @ConditionalOnProperty(prefix="spring.data.mongodb", name = "uri")

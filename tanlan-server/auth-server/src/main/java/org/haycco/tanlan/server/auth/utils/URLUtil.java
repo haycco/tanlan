@@ -5,9 +5,7 @@ import java.util.Map;
 import org.springframework.util.StringUtils;
 
 /**
- * @author liuyang
- * @Description
- * @Date 2019/5/30 20:03
+ * @author haycco
  **/
 public class URLUtil {
     /**
