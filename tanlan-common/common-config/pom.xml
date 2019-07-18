@@ -84,12 +84,4 @@
         <finalName>${name.prefix}-${project.artifactId}-${project.version}</finalName>
     </build>
 
-    <repositories>
-        <repository>
-            <id>jcenter-snapshots</id>
-            <name>jcenter</name>
-            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
-        </repository>
-    </repositories>
-
 </project>
