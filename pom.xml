@@ -20,8 +20,8 @@
         <name.prefix>tanlan</name.prefix>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-        <spring-boot-admin-server.version>2.1.5</spring-boot-admin-server.version>
+        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+        <spring-boot-admin-server.version>2.1.6</spring-boot-admin-server.version>
         <swagger-annotations.version>1.5.21</swagger-annotations.version>
         <feign-reactive.version>1.0.30</feign-reactive.version>
         <wiremock.version>2.19.0</wiremock.version>
