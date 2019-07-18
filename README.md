@@ -12,7 +12,7 @@ Tanlan is webflux reactive micro-services for Spring Cloud 2.x Application, whic
 * Docker&docker-compose
 * [Reactor 3](https://projectreactor.io/docs/core/release/reference/)
 * [Spring Boot 2.x (2.1.6.RELEASE)](https://spring.io/projects/spring-boot)
-* [Spring Cloud 2.x (Greenwich.SR1)](https://spring.io/projects/spring-cloud)
+* [Spring Cloud 2.x (Greenwich.SR2)](https://spring.io/projects/spring-cloud)
 * [Redis 4.0+](https://redis.io/documentation)
 * [RocketMQ 4.4.0+](https://github.com/alibaba/spring-cloud-alibaba)
 * [MongoDB 4.0+](https://docs.mongodb.com/manual/reference/sql-comparison/)
