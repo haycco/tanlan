@@ -3,6 +3,9 @@ Tanlan is webflux reactive micro-services for Spring Cloud 2.x Application, whic
 
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg?style=flat-square)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
+## Project Structure
+![Image](https://raw.githubusercontent.com/haycco/imgrepo/master/img/project-struct.png)
+
 ## Requirements
 * JDK 1.8+
 * Maven 3+
